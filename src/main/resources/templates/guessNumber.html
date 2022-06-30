@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guess a number</title>
+</head>
+<body>
+<div class="main-container">
+    <div class="statement"> Welcome to the guessing game! Please select a number below between 1 and 6: </div>
+    <div class="container">
+        <div class="guess"><a href="/roll-dice/1">1</a></div>
+        <div class="guess"><a href="/roll-dice/2">2</a></div>
+        <div class="guess"><a href="/roll-dice/3">3</a></div>
+        <div class="guess"><a href="/roll-dice/4">4</a></div>
+        <div class="guess"><a href="/roll-dice/5">5</a></div>
+        <div class="guess"><a href="/roll-dice/6">6</a></div>
+    </div>
+</div>
+</body>
+</html>
+
+<style>
+    .main-container {
+        width: 700px;
+        margin: 0 auto;
+        background-color: #362e57;
+        border: 2px solid white;
+        border-radius: 8px;
+        color: white;
+        padding: 10px;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        width: 500px;
+        margin: 0 auto;
+    }
+    .statement {
+        text-align: center;
+    }
+    .guess {
+        padding: 10px;
+        margin: 5px;
+    }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+    a:hover {
+        color: cyan;
+    }
+
+</style>

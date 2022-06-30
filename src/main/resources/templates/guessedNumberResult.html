@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guessed Number</title>
+</head>
+<body>
+
+
+<div class="statement">You guessed this number: <span th:text="${guessedNumber}"></span></div>
+<div class="sub-statement">We were expecting this number: <span th:text="${randomNumber}"></span></div>
+
+<div>
+    <p th:text="${guessedNumber == randomNumber} ? 'You guessed Correct' : 'You guessed incorrectly'">TRUE or FALSE</p>
+</div>
+
+
+
+
+</body>
+</html>
