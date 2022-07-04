@@ -1,15 +1,39 @@
 package com.codeup.groovy_spring_notes.controllers;
 
 import com.codeup.groovy_spring_notes.models.Post;
+import com.codeup.groovy_spring_notes.repositories.PostRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+
 @Controller // Spring will initialize the bean for us with this annotation
 public class PostController {
+// before we can use methods of other classes,
+// we first need to create the object of that class
+// One of the ways we can do this, is in the constructor.
+// Spring provides us with some facilities to use
+// automatic dependency injection in our classes.
+//
+// The following example shows how we can inject
+// AdRepository into our AdController.
+//class AdController {
+//    private final AdRepository adDao;
+//
+//    public AdController(AdRepository adDao) {
+//        this.adDao = adDao;
+//    }
+//}
+    // create field
+    private final PostRepository postDao;
+    // create constructor
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
 
     @GetMapping("/posts")
     // The Model interface replaces the servlet functionality like doGet and doPost
@@ -30,14 +54,18 @@ public class PostController {
     }
 
     @GetMapping("/posts/create")
-    public String postFormCreate(String create){
-        return "Please click here to fill out post " + create;
+    public String postFormCreate(Model model){
+
+        model.addAttribute("newPost", new Post());
+        return "posts/create";
     }
 
-//    @PostMapping("/posts/create")
-//    public String createPost(){
-//        return;
-//    }
+    @PostMapping("/posts/create")
+    public String createPost(@RequestParam("title") String title, @RequestParam("body") String body){
+        postDao.save(new Post(title, body));
+        return "redirect:/posts";
+
+    }
 
 
 
