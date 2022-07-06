@@ -2,6 +2,7 @@ package com.codeup.groovy_spring_notes.controllers;
 
 import com.codeup.groovy_spring_notes.models.Post;
 import com.codeup.groovy_spring_notes.repositories.PostRepository;
+import com.codeup.groovy_spring_notes.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +31,11 @@ public class PostController {
 //}
     // create field
     private final PostRepository postDao;
-    // create constructor
-    public PostController(PostRepository postDao) {
+    private final UserRepository userDao;
+    // add/create constructor
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/posts")
@@ -43,6 +46,7 @@ public class PostController {
         // line below is the same as:  request.setAttribute("allPosts", allPosts);
         model.addAttribute("allPosts", allPosts);
         // the value allPosts can then be consumed by the index page with a for each loop
+
         return "posts/index";
     }
 
