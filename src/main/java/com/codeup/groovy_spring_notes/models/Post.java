@@ -21,5 +21,16 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public Post(String title, String body) {
+        this.title = title;
+        this.body = body;
+    }
 
+    public Post() {
+        this.body = body;
+    }
+
+    public User getOwner() {
+        return user;
+    }
 }

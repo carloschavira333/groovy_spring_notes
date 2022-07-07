@@ -5,10 +5,7 @@ import com.codeup.groovy_spring_notes.repositories.PostRepository;
 import com.codeup.groovy_spring_notes.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -39,13 +36,16 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    // The Model interface replaces the servlet functionality like doGet and doPost
     public String posts(Model model){
-        // create an ArrayList with a type of Post (this is the Post class in models pkg) call it something relevant (like "allPosts) set it equal to a new ArrayList<>()
-        ArrayList<Post> allPosts = new ArrayList<>();
-        // line below is the same as:  request.setAttribute("allPosts", allPosts);
-        model.addAttribute("allPosts", allPosts);
-        // the value allPosts can then be consumed by the index page with a for each loop
+//        // create an ArrayList with a type of Post (this is the Post class in models pkg) call it something relevant (like "allPosts) set it equal to a new ArrayList<>()
+//        ArrayList<Post> allPosts = new ArrayList<>();
+//        // line below is the same as:  request.setAttribute("allPosts", allPosts);
+//        model.addAttribute("allPosts", allPosts);
+//        // the value allPosts can then be consumed by the index page with a for each loop
+
+        model.addAttribute("posts", postDao.findAll());
+        model.addAttribute("users", userDao.findAll());
+
 
         return "posts/index";
     }
@@ -53,7 +53,8 @@ public class PostController {
     @GetMapping("/posts/{id}")
     //The @PathVariable annotation is used to extract the value form the URI
     public String viewIndividualPost(@PathVariable("id") long id, Model model){
-        model.addAttribute("singlePost", new Post("This is a single post."));
+        Post post = postDao.getById(id);
+        model.addAttribute("singlePost", post);
         return "posts/show";
     }
 
@@ -69,6 +70,21 @@ public class PostController {
         postDao.save(new Post(title, body));
         return "redirect:/posts";
 
+    }
+
+    @GetMapping("/post/{id}/edit")
+    public String editPost(@PathVariable long id, Model model){
+        Post post = postDao.getById(id);
+
+        model.addAttribute("post",post);
+        return "posts/edit";
+
+    }
+
+    @PostMapping("post/{id}/edit")
+    public String editAndSubmit(@PathVariable long id, @ModelAttribute Post post){
+        postDao.save(post);
+        return "redirect:/post";
     }
 
 
